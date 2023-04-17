@@ -2,7 +2,7 @@ import { format, transports, createLogger } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import morgan, { StreamOptions } from 'morgan';
 
-const { combine, timestamp, json, align } = format;
+const { combine, timestamp, json } = format;
 
 export class Logger {
   static getInstance = (service = 'general-purpose') => {
