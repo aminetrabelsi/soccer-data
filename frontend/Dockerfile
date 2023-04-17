@@ -1,15 +1,12 @@
-FROM node:18-alpine AS build
+FROM node:18-alpine
 ENV NODE_ENV development
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "yarn.lock", "./"]
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
-RUN npm run build
-
-FROM nginx:1.23.4-alpine
-COPY --from=build /app/public /usr/share/nginx/html
+CMD ["yarn", "dev", "--host", "0.0.0.0"]
