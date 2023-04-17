@@ -3,7 +3,6 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - echo $JWT_SECRET
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 954587698208.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
@@ -14,6 +13,7 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
+      - echo $IMAGE_REPO_NAME
       - docker-compose --file=docker-compose.prod.yml push
 artifacts:
   files:
