@@ -13,7 +13,6 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - echo $IMAGE_REPO_NAME
       - docker-compose --file=docker-compose.prod.yml push
 artifacts:
   files:

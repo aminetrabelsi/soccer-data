@@ -7,14 +7,14 @@ services:
     depends_on: 
       - backend
       - frontend
-    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-prj-nginx
+    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx
     ports: 
       - "80:80"
   backend: 
     build: 
       context: ./backend
     container_name: backend
-    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-prj-backend
+    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend
     ports: 
       - "3001:3001"
     environment:
@@ -25,6 +25,6 @@ services:
     build: 
       context: ./frontend
     container_name: frontend
-    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-prj-frontend
+    image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend
     ports: 
       - "5173:5173"
