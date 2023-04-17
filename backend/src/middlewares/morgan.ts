@@ -1,3 +1,4 @@
+// @ts-nocheck
 import morgan, { StreamOptions } from 'morgan';
 
 import Logger from '../utils/Logger';

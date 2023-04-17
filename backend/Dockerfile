@@ -8,4 +8,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run dev
+EXPOSE 3001
+
+RUN npm run build
+
+CMD [ "node", "dist/server.js" ]
