@@ -1,7 +1,7 @@
 FROM node:18-alpine AS build
 ENV NODE_ENV development
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "yarn.lock", "./"]
 
