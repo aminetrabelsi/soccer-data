@@ -39,8 +39,8 @@
         }
       ],
       "links": [
-        "ui",
-        "api"
+        "backend",
+        "frontend"
       ],
       "memory": 512
     }
