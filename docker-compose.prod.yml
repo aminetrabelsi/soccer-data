@@ -7,20 +7,20 @@ services:
     depends_on: 
       - backend
       - frontend
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-nginx
+    image: 954587698208.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-nginx
     ports: 
       - "80:80"
   api: 
     build: 
       context: ./backend
     container_name: backend
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-backend
+    image: 954587698208.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-backend
     ports: 
       - "3001:3001"
   ui: 
     build: 
       context: ./frontend
     container_name: frontend
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-frontend
+    image: 954587698208.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-frontend
     ports: 
       - "5173:5173"

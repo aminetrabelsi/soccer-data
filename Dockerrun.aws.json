@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "frontend",
-      "image": "{$AWS_ACCOUNT_ID}.dkr.ecr.{$AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-frontend",
+      "image": "954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend",
       "hostname": "frontend",
       "essential": true,
       "memory": 1024,
@@ -16,7 +16,7 @@
     },
     {
       "name": "backend",
-      "image": "{$AWS_ACCOUNT_ID}.dkr.ecr.{$AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-backend",
+      "image": "954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend",
       "hostname": "backend",
       "essential": true,
       "memory": 512,
@@ -29,7 +29,7 @@
     },
     {
       "name": "nginx",
-      "image": "{$AWS_ACCOUNT_ID}.dkr.ecr.{$AWS_DEFAULT_REGION}.amazonaws.com/soccer-data-nginx",
+      "image": "954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
