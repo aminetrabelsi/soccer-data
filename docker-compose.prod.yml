@@ -17,6 +17,10 @@ services:
     image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend
     ports: 
       - "3001:3001"
+    environment:
+      - JWT_SECRET=Ifta7ya5emSem
+      - API_PORT=3001
+      - DB_NAME=soccer_db
   frontend: 
     build: 
       context: ./frontend
