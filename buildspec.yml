@@ -3,20 +3,21 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - echo $IMAGE_REPO_NAME
-      - echo $IMAGE_TAG
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 954587698208.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend ./frontend
+      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend ./backend
+      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx ./nginx
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend
+      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend
+      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx
 artifacts:
   files:
     - 'Dockerrun.aws.json'
