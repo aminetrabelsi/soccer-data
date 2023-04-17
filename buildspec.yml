@@ -8,16 +8,12 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend ./frontend
-      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend ./backend
-      - docker build -t 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx ./nginx
+      - docker-compose --file=docker-compose.prod.yml build
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend
-      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend
-      - docker push 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx
+      - docker-compose --file=docker-compose.prod.yml push
 artifacts:
   files:
     - 'Dockerrun.aws.json'
