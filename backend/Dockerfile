@@ -10,8 +10,8 @@ COPY . .
 
 EXPOSE 3001
 
-RUN ls
-
 RUN npm run build
+
+RUN ls
 
 CMD [ "node", "dist/server.js" ]
