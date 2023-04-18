@@ -50,7 +50,13 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 app.use('/healthcheck', require('express-healthcheck')());
 
 const specs = swaggerJsdoc(swaggerDocument);
-app.use("/backend/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// serve the swagger ui in a temporary directory
+app.use("/temp-api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// swagger-ui-express middleware that redirect user to /api-docs will not be aware the prefix of path by ngnix
+const apiDocsRedirectPath = 'backend'.concat('/temp-api-docs/');
+app.get('/api-docs', function (req, res) {
+  res.redirect(apiDocsRedirectPath);
+});
 
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);
