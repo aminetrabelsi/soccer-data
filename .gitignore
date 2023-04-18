@@ -5,7 +5,7 @@
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-/logs
+/backend/logs
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 *env*
