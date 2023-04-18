@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 
 import { Logger } from '../utils/Logger';
 import RequestValidator from '../utils/RequestValidator';
-import { createLeague, findAll, findById } from '../repositories/LeagueRepository';
+import { createLeague, deleteLeague, findAll, findById } from '../repositories/LeagueRepository';
 import { CreateLeagueRequest } from '../middlewares/validation/LeagueRequests';
 import { auth } from '../middlewares/auth';
 
@@ -169,6 +169,26 @@ router.post('/', RequestValidator.validate(CreateLeagueRequest), auth, async (re
   const league = await createLeague({ name, country, season });
   logger.info(JSON.stringify(league));
   res.status(200).send(league);
+});
+
+router.delete('/:id', auth, async (req: Request, res: Response) => {
+  try {
+    const id: number = parseInt(req.params.id);
+    const league = await findById(id);
+    if (league) {
+      const deleted = deleteLeague(id);
+      logger.info(`deleted ${deleted} league rows`);
+      res.status(200).send(`League ${id} deleted successfully`);
+    } else {
+      res.status(404).send('League not found !');
+    }
+  } catch (err) {
+    logger.error(err);
+    if (err.message === 'column "nan" does not exist') {
+      res.status(400).send(`League id should be a number`);
+    }
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 export { router as leaguesRouter };
