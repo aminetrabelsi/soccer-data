@@ -6,7 +6,7 @@
       "image": "954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend",
       "hostname": "frontend",
       "essential": true,
-      "memory": 512,
+      "memory": 1024,
       "portMappings": [
         {
           "hostPort": 3000,
@@ -19,7 +19,7 @@
       "image": "954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-backend",
       "hostname": "backend",
       "essential": true,
-      "memory": 512,
+      "memory": 1024,
       "portMappings": [
         {
           "hostPort": 3001,
