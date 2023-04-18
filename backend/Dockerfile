@@ -12,6 +12,5 @@ EXPOSE 3001
 
 RUN npm run build
 
-RUN ls
-
-CMD [ "node", "dist/server.js" ]
+RUN ls /usr/src/app/dist/
+RUN node dist/server.js
