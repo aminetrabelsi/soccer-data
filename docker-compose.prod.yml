@@ -18,6 +18,7 @@ services:
       - JWT_SECRET=Ifta7ya5emSem
       - API_PORT=3001
       - DB_NAME=soccer_db
+    command: node dist/server.js
   frontend: 
     build: 
       context: ./frontend
