@@ -15,7 +15,7 @@ const connection = new Sequelize({
   database: config.dbName,
   logging: true,
   dialectOptions: {
-    ssl: true
+    ssl: { rejectUnauthorized: false }
   },
   models: [Player, Team, League, Match, Stat, User],
 });
