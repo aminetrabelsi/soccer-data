@@ -7,6 +7,8 @@ services:
     image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx
     ports: 
       - "80:80"
+    networks:
+      - mynet
   backend: 
     build: 
       context: ./backend
@@ -18,6 +20,8 @@ services:
       - JWT_SECRET=Ifta7ya5emSem
       - API_PORT=3001
       - DB_NAME=soccer_db
+    networks:
+    - mynet
   frontend: 
     build: 
       context: ./frontend
@@ -25,3 +29,8 @@ services:
     image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend
     ports: 
       - "3000:3000"
+    networks:
+      - mynet
+networks:
+  mynet:
+    driver: bridge
