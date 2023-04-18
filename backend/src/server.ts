@@ -31,6 +31,8 @@ app.use(helmet());
 app.use(cors());
 const logger = Logger.getInstance();
 
+app.use('/healthcheck', require('express-healthcheck')());
+
 app.use(function (req: Request, res: Response, next: NextFunction) {
   if (toobusy()) {
     logger.error('Server too busy!');
