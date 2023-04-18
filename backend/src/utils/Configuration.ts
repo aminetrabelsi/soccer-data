@@ -2,11 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config({ path: __dirname + `/../../.env.${process.env.NODE_ENV}` });
 
 const config = {
-  jwtSecret: process.env.JWT_SECRET,
-  apiPort: process.env.API_PORT,
+  jwtSecret: 'Ifta7ya5emSem',
+  apiPort: 3001,
   dbHost: process.env.RDS_HOSTNAME,
   dbPort: process.env.RDS_PORT,
-  dbName: process.env.DB_NAME,
+  dbName: 'soccer_db',
   dbUsername: process.env.RDS_USERNAME,
   dbPassword: process.env.RDS_PASSWORD,
 };

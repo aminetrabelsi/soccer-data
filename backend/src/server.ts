@@ -21,6 +21,7 @@ import { playersRouter } from './routes/players';
 import { matchesRouter } from './routes/matches';
 import { statsRouter } from './routes/stats';
 import { authRouter } from './routes/auth';
+import { stringify } from 'querystring';
 
 const app: Application = express();
 
@@ -78,6 +79,7 @@ startServer();
 try {
   app.listen(config.apiPort, (): void => {
     logger.info(`Connected successfully on api port ${config.apiPort}`);
+    logger.info(`========> ${JSON.stringify(process.env)}`);
   });
 } catch (error: any) {
   logger.error(`Error occured while listening API port: ${error.message}`);
