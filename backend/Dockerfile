@@ -12,4 +12,4 @@ EXPOSE 3001
 
 RUN npm run build
 
-RUN ls /usr/src/app/dist/
+RUN ls /usr/src/app/dist/src
