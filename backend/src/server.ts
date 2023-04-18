@@ -31,8 +31,6 @@ app.use(helmet());
 app.use(cors());
 const logger = Logger.getInstance();
 
-app.use('/healthcheck', require('express-healthcheck')());
-
 app.use(function (req: Request, res: Response, next: NextFunction) {
   if (toobusy()) {
     logger.error('Server too busy!');
@@ -47,6 +45,8 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
     message: 'Hello To Soccer API!',
   });
 });
+
+app.use('/healthcheck', require('express-healthcheck')());
 
 const specs = swaggerJsdoc(swaggerDocument);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));

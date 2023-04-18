@@ -3,7 +3,6 @@
   import axios from 'axios';
 
   let msg = '';
-
   $: msg;
 
   onMount(async () => {
