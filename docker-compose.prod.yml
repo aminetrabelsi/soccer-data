@@ -4,9 +4,6 @@ services:
     build:
       context: ./nginx
     container_name: nginx
-    depends_on: 
-      - backend
-      - frontend
     image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-nginx
     ports: 
       - "80:80"
