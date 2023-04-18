@@ -12,5 +12,4 @@ EXPOSE 3001
 
 RUN npm run build
 
-RUN ls /usr/src/app/dist/src
-RUN node dist/src/server.js
+CMD [ "node", "dist/src/server.js" ]
