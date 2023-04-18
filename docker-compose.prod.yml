@@ -27,4 +27,4 @@ services:
     container_name: frontend
     image: 954587698208.dkr.ecr.eu-west-3.amazonaws.com/soccer-data-frontend
     ports: 
-      - "5173:5173"
+      - "3000:3000"

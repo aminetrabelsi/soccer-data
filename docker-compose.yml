@@ -36,9 +36,9 @@ services:
     env_file:
       - ./env/frontend.env
     expose:
-      - '5173'
+      - '3000'
     ports:
-      - '5173:5173'
+      - '3000:3000'
     depends_on:
       - postgres
     restart: on-failure
