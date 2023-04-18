@@ -31,7 +31,7 @@ app.use(helmet());
 app.use(cors());
 const logger = Logger.getInstance();
 
-app.use(function (req: Request, res: Response, next: NextFunction) {
+/* app.use(function (req: Request, res: Response, next: NextFunction) {
   if (toobusy()) {
     logger.error('Server too busy!');
     res.status(503).send('Server too busy!');
@@ -39,7 +39,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
   }
 });
-
+ */
 app.get('/', async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
     message: 'Hello To Soccer API!',
