@@ -1,14 +1,8 @@
 FROM node:18-alpine
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-COPY package*.json /usr/src/app
+ENV NODE_ENV=production 
+COPY . /app
+WORKDIR /app
 RUN npm install
-
-COPY . ./usr/src/app
-
-EXPOSE 3001
-
 RUN npm run build
-
+EXPOSE 3001
 CMD [ "node", "dist/server.js" ]
