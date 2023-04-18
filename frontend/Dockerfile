@@ -2,6 +2,7 @@ FROM node:18-alpine AS build
 ENV NODE_ENV=production 
 COPY . /app
 WORKDIR /app
+RUN npm install -g vite@4.2.0
 RUN npm run build
 
 FROM node:18-alpine
