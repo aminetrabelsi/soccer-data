@@ -50,7 +50,7 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 app.use('/healthcheck', require('express-healthcheck')());
 
 const specs = swaggerJsdoc(swaggerDocument);
-app.use('/backend/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);
