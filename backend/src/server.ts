@@ -49,8 +49,13 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 
 app.use('/healthcheck', require('express-healthcheck')());
 
+const forwardedPrefixSwagger = async (req: Request, res: Response, next: NextFunction) => {
+  req.originalUrl = (req.headers['x-forwarded-prefix'] || '') + req.url;
+  next();
+};
+
 const specs = swaggerJsdoc(swaggerDocument);
-app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);
