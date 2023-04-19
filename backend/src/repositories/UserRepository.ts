@@ -21,7 +21,7 @@ export const signInUser = async ({ username, password }: UserAttributes): Promis
 
   if (isMatch) {
     const token = jwt.sign({ id: user.id?.toString(), usernamename: user.username }, config.jwtSecret!, {
-      expiresIn: '2 hours',
+      expiresIn: '12 hours',
     });
 
     return { token: token };
