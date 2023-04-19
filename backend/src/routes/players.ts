@@ -16,35 +16,37 @@ const router = express.Router();
  *   schemas:
  *     PlayerRequest:
  *       type: object
+ *       required:
+ *         - firstname
+ *         - lastname
+ *         - numero
+ *         - birthdate
+ *         - country
+ *         - position
+ *         - teamId
  *       properties:
  *         firstname:
  *           type: string
- *           description: The player first name
- *           example: Diego
+ *           description: The first name of the player
  *         lastname:
  *           type: string
- *           description: The player last name
- *           example: Maradona
+ *           description: The last name of the player
+ *         numero:
+ *           type: number
+ *           description: The T-shirt num
  *         birthdate:
- *           type: date
- *           description: Date of birth
- *           example: 1960-10-30
+ *           type: string
+ *           format: date
+ *           description: The birth date of the player in ISO 8601
  *         country:
  *           type: string
  *           description: The player country
- *           example: Argentina
  *         position:
  *           type: string
- *           description: position in pitch
- *           example: Midfield
- *         numero:
- *           type: number
- *           description: The T-shirt number
- *           example: 10
+ *           description: The position in the pitch
  *         teamId:
- *           type: number
- *           description: The team id
- *           example: 1
+ *           type: string
+ *           description: The team ID
  *     Player:
  *       allOf:
  *         - $ref: '#/components/schemas/PlayerRequest'
@@ -55,22 +57,15 @@ const router = express.Router();
  *             id:
  *             type: number
  *             description: The auto-generated id of the player
- *     Error:
- *       type: object
- *       properties:
- *         success:
- *           type: string
- *           description: false indicating an error
- *         message:
- *           type: string
- *           description: General message
- *         rawErrors:
- *           type: array
- *           description: Raw errors detected by the API 
  *       example:
- *         success: false
- *         message: Request validation failed!
- *         rawErrors: ["country should not be null or undefined"]
+ *         id: 1
+ *         firstname: Diego
+ *         lastname: Maradona
+ *         numero: 10
+ *         birthdate: 1960-10-30
+ *         country: Argentina
+ *         position: Midfield
+ *         teamId: 1
  */
 
 /**
@@ -91,32 +86,6 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Player'
- *   post:
- *     summary: Create a new player
- *     tags: [Players]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/PlayerRequest'
- *     responses:
- *       200:
- *         description: The created player.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Team'
- *       400:
- *         description: Missing required fields
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *               type: string
- *               example : Request validation failed!
- *       500:
- *         description: Some server error
  * /players/{id}:
  *   get:
  *     summary: Get the player by id
@@ -151,34 +120,34 @@ const router = express.Router();
  *               example : Player id should be a number
  *       500:
  *         description: Some server error
- *   put:
- *     summary: Update the player by the id
+ *   post:
+ *     summary: Create a new player
  *     tags: [Players]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The player id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Player'
+ *             $ref: '#/components/schemas/PlayerRequest'
  *     responses:
  *       200:
- *         description: The player was updated
+ *         description: The created player.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Player'
- *       404:
- *         description: The player was not found
+ *       400:
+ *         description: Missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *               type: string
+ *               example : Request validation failed!
  *       500:
- *         description: Some error happened
+ *         description: Some server error
  */
+
 
 router.get('/', async (req: Request, res: Response) => {
   const players = await findAll();

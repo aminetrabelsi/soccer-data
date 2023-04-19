@@ -55,57 +55,6 @@ const router = express.Router();
  *         venue: Stadio Diego Armando Maradona
  *         city: Napoly
  *         country: Italy
- *     Player:
- *       type: object
- *       properties:
- *         id:
- *           type: number
- *           description: The player id
- *           example: 1
- *         firstname:
- *           type: string
- *           description: The player first name
- *           example: Diego
- *         lastname:
- *           type: string
- *           description: The player last name
- *           example: Maradona
- *         birthdate:
- *           type: date
- *           description: Date of birth
- *           example: 1960-10-30
- *         country:
- *           type: string
- *           description: The player country
- *           example: Argentina
- *         position:
- *           type: string
- *           description: position in pitch
- *           example: Midfield
- *         numero:
- *           type: number
- *           description: The T-shirt number
- *           example: 10
- *         teamId:
- *           type: number
- *           description: The team id
- *           example: 1
- *     Error:
- *       type: object
- *       properties:
- *         success:
- *           type: string
- *           description: false indicating an error
- *         message:
- *           type: string
- *           description: General message
- *         rawErrors:
- *           type: array
- *           description: Raw errors detected by the API 
- *       example:
- *         success: false
- *         message: Request validation failed!
- *         rawErrors: ["country should not be null or undefined"]
  */
 
 /**
@@ -203,7 +152,9 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Player'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Player'
  *       404:
  *         description: The team was not found
  *         content:
