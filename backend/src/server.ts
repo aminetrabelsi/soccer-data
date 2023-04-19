@@ -59,7 +59,7 @@ if (process.env.NODE_ENV!=='development') {
 }
 const specs = swaggerJsdoc(swaggerDocument);
 // app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
-app.use('${pref}/api-docs/', swaggerUi.serve, swaggerUi.setup(specs));
+app.use(`${pref}/api-docs`, swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(`${pref}/leagues`, leaguesRouter);
 app.use(`${pref}/teams`, teamsRouter);
