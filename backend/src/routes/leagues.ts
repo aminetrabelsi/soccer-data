@@ -44,6 +44,18 @@ const router = express.Router();
  *         name: Serie A
  *         country: Italy
  *         season: 2022-2023
+ *     PaginationRequest:
+ *       type: object
+ *       properties:
+ *         offset:
+ *           type: number
+ *           description: Nbr of instances to be skipped (default nil)
+ *         limit:
+ *           type: number
+ *           description: Max rows to be fetched (default 10)
+ *       example:
+ *         offset: 0
+ *         limit: 20
  *     Error:
  *       type: object
  *       properties:
@@ -71,6 +83,11 @@ const router = express.Router();
  *   get:
  *     summary: Lists all the leagues
  *     tags: [Leagues]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PaginationRequest'
  *     responses:
  *       200:
  *         description: The list of the leagues
@@ -206,8 +223,14 @@ const router = express.Router();
  */
 
 router.get('/', async (req: Request, res: Response) => {
-  const leagues = await findAll();
-  res.status(200).send(leagues);
+  try {
+    const offset: number = parseInt(req.body.offset) || 0;
+    const limit: number = parseInt(req.body.limit) || 10;
+    const leagues = await findAll(offset, limit);
+    res.status(200).send(leagues);
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {

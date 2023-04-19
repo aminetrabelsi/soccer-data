@@ -73,6 +73,11 @@ const router = express.Router();
  *   get:
  *     summary: Lists all the teams
  *     tags: [Teams]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PaginationRequest'
  *     responses:
  *       200:
  *         description: The list of the teams
@@ -203,8 +208,14 @@ const router = express.Router();
  */
 
 router.get('/', async (req: Request, res: Response) => {
-  const teams = await findAll();
+  try {
+    const offset: number = parseInt(req.body.offset) || 0;
+    const limit: number = parseInt(req.body.limit) || 10;
+    const teams = await findAll(offset, limit);
   res.status(200).send(teams);
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {

@@ -80,6 +80,11 @@ const router = express.Router();
  *   get:
  *     summary: Lists all the stats
  *     tags: [Stats]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PaginationRequest'
  *     responses:
  *       200:
  *         description: The list of the stats
@@ -169,8 +174,14 @@ const router = express.Router();
  */
 
 router.get('/', async (req: Request, res: Response) => {
-  const stats = await findAll();
-  res.status(200).send(stats);
+  try {
+    const offset: number = parseInt(req.body.offset) || 0;
+    const limit: number = parseInt(req.body.limit) || 10;
+    const stats = await findAll(offset, limit);
+    res.status(200).send(stats);
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {

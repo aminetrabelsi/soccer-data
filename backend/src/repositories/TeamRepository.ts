@@ -9,6 +9,6 @@ export const findById = async (id: number): Promise<Team | null> => {
   return await Team.findByPk(id);
 };
 
-export const findAll = async (): Promise<Team[]> => {
-  return await Team.findAll();
+export const findAll = async (offset: number, limit: number): Promise<Team[]> => {
+  return await Team.findAll({ offset, limit });
 };

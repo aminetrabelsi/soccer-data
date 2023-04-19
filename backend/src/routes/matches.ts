@@ -96,6 +96,11 @@ const router = express.Router();
  *   get:
  *     summary: Lists all the matches
  *     tags: [Matches]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PaginationRequest'
  *     responses:
  *       200:
  *         description: The list of the matches
@@ -224,8 +229,14 @@ const router = express.Router();
  */
 
 router.get('/', async (req: Request, res: Response) => {
-  const matches = await findAll();
-  res.status(200).send(matches);
+  try {
+    const offset: number = parseInt(req.body.offset) || 0;
+    const limit: number = parseInt(req.body.limit) || 10;
+    const matches = await findAll(offset, limit);
+    res.status(200).send(matches);
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 router.post('/', RequestValidator.validate(CreateMatchRequest), auth, async (req: Request, res: Response) => {

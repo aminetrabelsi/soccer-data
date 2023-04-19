@@ -35,6 +35,6 @@ export const findByPlayerAndMatch = async (id: number, match: number): Promise<S
   });
 };
 
-export const findAll = async (): Promise<Stat[]> => {
-  return await Stat.findAll();
+export const findAll = async ( offset: number, limit:number ): Promise<Stat[]> => {
+  return await Stat.findAll({ offset, limit });
 };

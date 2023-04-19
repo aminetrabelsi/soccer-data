@@ -92,6 +92,11 @@ const router = express.Router();
  *   get:
  *     summary: Lists all the players
  *     tags: [Players]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PaginationRequest'
  *     responses:
  *       200:
  *         description: The list of the players
@@ -307,8 +312,14 @@ const router = express.Router();
  */
 
 router.get('/', async (req: Request, res: Response) => {
-  const players = await findAll();
-  res.status(200).send(players);
+  try {
+    const offset: number = parseInt(req.body.offset) || 0;
+    const limit: number = parseInt(req.body.limit) || 1;
+    const players = await findAll(offset, limit);
+    res.status(200).send(players);
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 router.post('/', RequestValidator.validate(CreatePlayerRequest), auth, async (req: Request, res: Response) => {
@@ -318,7 +329,7 @@ router.post('/', RequestValidator.validate(CreatePlayerRequest), auth, async (re
     logger.info(JSON.stringify(player));
     res.status(200).send(player);    
   } catch (err) {
-    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
 });
 
