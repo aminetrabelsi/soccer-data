@@ -58,24 +58,6 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/League'
- *   post:
- *     summary: Create a new league
- *     tags: [Leagues]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/League'
- *     responses:
- *       200:
- *         description: The created league.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/League'
- *       500:
- *         description: Some server error
  * /leagues/{id}:
  *   get:
  *     summary: Get the league by id
@@ -97,8 +79,37 @@ const router = express.Router();
  *       404:
  *         description: The league was not found
  *         content:
- *           application/text
- *             League id not found !
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : League 1 not found !
+ *       400:
+ *         description: Bad league id
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : League id should be a number
+ *       500:
+ *         description: Some server error
+ *   post:
+ *     summary: Create a new league
+ *     tags: [Leagues]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/League'
+ *     responses:
+ *       200:
+ *         description: The created league.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/League'
+ *       500:
+ *         description: Some server error
  *   put:
  *    summary: Update the league by the id
  *    tags: [Leagues]
@@ -161,7 +172,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   } catch (err) {
     logger.error(err);
     if (err.message === 'column "nan" does not exist') {
-      res.status(400).send(`League id should be a number`);
+      res.status(400).send('League id should be a number');
     }
     res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }

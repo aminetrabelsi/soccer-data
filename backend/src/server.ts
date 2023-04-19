@@ -53,11 +53,13 @@ const specs = swaggerJsdoc(swaggerDocument);
 if (process.env.NODE_ENV==='development') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 } else {
-  const forwardedPrefixSwagger = async (req: Request, res: Response, next: NextFunction) => {
-    req.originalUrl = (req.headers['x-forwarded-prefix'] || '') + req.url;
-    next();
-  };
-  app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
+  // serve the swagger ui in a temporary directory
+  app.use('/temp-api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+  // swagger-ui-express middleware that redirect user to /api-docs will not be aware the prefix of path by ngnix
+  const apiDocsRedirectPath = 'backend'.concat('/temp-api-docs/');
+  app.get('/api-docs', function (req, res) {
+    res.redirect(apiDocsRedirectPath);
+  });
 }
 
 app.use('/leagues', leaguesRouter);
