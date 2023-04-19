@@ -28,7 +28,7 @@ const router = express.Router();
  *           description: The league country
  *         season:
  *           type: string
- *           description: The league season     
+ *           description: The league season
  *     League:
  *       allOf:
  *         - $ref: '#/components/schemas/LeagueRequest'
@@ -55,7 +55,7 @@ const router = express.Router();
  *           description: General message
  *         rawErrors:
  *           type: array
- *           description: Raw errors detected by the API 
+ *           description: Raw errors detected by the API
  *       example:
  *         success: false
  *         message: Request validation failed!

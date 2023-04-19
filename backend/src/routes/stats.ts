@@ -48,7 +48,7 @@ const router = express.Router();
  *           description: The match ID
  *         playerId:
  *           type: number
- *           description: The player ID     
+ *           description: The player ID
  *     Stat:
  *       allOf:
  *         - $ref: '#/components/schemas/StatRequest'

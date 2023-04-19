@@ -8,14 +8,14 @@ import { Stat } from '../models/Stat';
 import { User } from '../models/User';
 
 let dialectOptions;
-if (process.env.NODE_ENV==='development') {
-  dialectOptions =  {}
-  } else {
+if (process.env.NODE_ENV === 'development') {
+  dialectOptions = {};
+} else {
   dialectOptions = {
     ssl: {
       rejectUnauthorized: false,
-    }
-  }
+    },
+  };
 }
 
 const connection = new Sequelize({

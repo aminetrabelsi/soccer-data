@@ -28,7 +28,7 @@ const router = express.Router();
  *           description: The name of the team
  *         venue:
  *           type: string
- *           description: The venue/stadium of the team 
+ *           description: The venue/stadium of the team
  *         founded:
  *           type: string
  *           format: date

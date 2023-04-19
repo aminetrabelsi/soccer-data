@@ -11,7 +11,7 @@ export const signUpUser = async ({ username, password }: UserAttributes): Promis
   return await user.save();
 };
 
-export const signInUser = async ({ username, password }: UserAttributes): Promise<{token: string}> => {
+export const signInUser = async ({ username, password }: UserAttributes): Promise<{ token: string }> => {
   const user = await findByUsername(username!);
   if (!user) {
     throw new Error(`${username} is unregistered`);

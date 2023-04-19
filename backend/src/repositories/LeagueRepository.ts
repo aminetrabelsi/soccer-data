@@ -13,6 +13,6 @@ export const findAll = async (): Promise<League[]> => {
   return await League.findAll();
 };
 
-export const deleteLeague = async (id:number): Promise<number> => {
+export const deleteLeague = async (id: number): Promise<number> => {
   return await League.destroy({ where: { id } });
 };

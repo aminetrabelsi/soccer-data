@@ -306,7 +306,6 @@ const router = express.Router();
  *               example : Error name message occured
  */
 
-
 router.get('/', async (req: Request, res: Response) => {
   const players = await findAll();
   res.status(200).send(players);

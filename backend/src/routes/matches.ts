@@ -36,7 +36,7 @@ const router = express.Router();
  *           description: The match score
  *         outcome:
  *           type: number
- *           description: match result as 1 0 2 
+ *           description: match result as 1 0 2
  *         leagueId:
  *           type: string
  *           description: The league to which the match belongs
@@ -229,10 +229,14 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 router.post('/', RequestValidator.validate(CreateMatchRequest), auth, async (req: Request, res: Response) => {
-  const { played, venue, score, outcome, leagueId, host, guest } = req.body;
-  const match = await createMatch({ played, venue, score, outcome, leagueId, host, guest });
-  logger.info(JSON.stringify(match));
-  res.status(200).send(match);
+  try {
+    const { played, venue, score, outcome, leagueId, host, guest } = req.body;
+    const match = await createMatch({ played, venue, score, outcome, leagueId, host, guest });
+    logger.info(JSON.stringify(match));
+    res.status(200).send(match);    
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
