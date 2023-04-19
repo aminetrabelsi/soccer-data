@@ -7,6 +7,17 @@ import { Match } from '../models/Match';
 import { Stat } from '../models/Stat';
 import { User } from '../models/User';
 
+let dialectOptions;
+if (process.env.NODE_ENV==='development') {
+  dialectOptions =  {}
+  } else {
+  dialectOptions = {
+    ssl: {
+      rejectUnauthorized: false,
+    }
+  }
+}
+
 const connection = new Sequelize({
   dialect: 'postgres',
   host: config.dbHost,
@@ -14,9 +25,7 @@ const connection = new Sequelize({
   password: config.dbPassword,
   database: config.dbName,
   logging: true,
-  dialectOptions: {
-    ssl: { rejectUnauthorized: false }
-  },
+  dialectOptions,
   models: [Player, Team, League, Match, Stat, User],
 });
 
