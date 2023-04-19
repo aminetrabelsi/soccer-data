@@ -50,7 +50,15 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 app.use('/healthcheck', require('express-healthcheck')());
 
 const specs = swaggerJsdoc(swaggerDocument);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+if (process.env.NODE_ENV==='development') {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+} else {
+  const forwardedPrefixSwagger = async (req: Request, res: Response, next: NextFunction) => {
+    req.originalUrl = (req.headers['x-forwarded-prefix'] || '') + req.url;
+    next();
+  };
+  app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
+}
 
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);

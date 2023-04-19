@@ -90,12 +90,15 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: The league response by id
- *         contens:
+ *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/League'
  *       404:
  *         description: The league was not found
+ *         content:
+ *           application/text
+ *             League id not found !
  *   put:
  *    summary: Update the league by the id
  *    tags: [Leagues]
@@ -153,7 +156,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     if (league) {
       res.status(200).send(league);
     } else {
-      res.status(404).send('League not found !');
+      res.status(404).send(`League ${id} not found !`);
     }
   } catch (err) {
     logger.error(err);
