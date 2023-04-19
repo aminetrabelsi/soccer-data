@@ -7,8 +7,6 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerDocument } from '../swagger';
 import swaggerJsdoc from 'swagger-jsdoc';
 
-import { NotFoundError } from './utils/ApiError';
-import ErrorHandler from './utils/ErrorHandler';
 import { Logger } from './utils/Logger';
 
 import { leaguesRouter } from './routes/leagues';
@@ -27,15 +25,17 @@ app.use(Logger.getHttpLoggerInstance());
 app.use(helmet());
 app.use(cors());
 
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  if (toobusy()) {
-    logger.error('Server too busy!');
-    res.status(503).send('Server too busy!');
-  } else {
-    next();
-  }
-});
-
+if (process.env.NODE_ENV !=='test') { 
+  app.use(function (req: Request, res: Response, next: NextFunction) {
+    if (toobusy()) {
+      logger.error('Server too busy!');
+      res.status(503).send('Server too busy!');
+    } else {
+      next();
+    }
+  });
+}
+  
 app.get('/', async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
     message: 'Hello To Soccer API!',
@@ -53,8 +53,7 @@ app.use('/matches', matchesRouter);
 app.use('/stats', statsRouter);
 app.use('/auth', authRouter);
 
-app.use((req: Request, res: Response, next: NextFunction) => next(new NotFoundError(req.path)));
-app.use(ErrorHandler.handle());
+
 
 
 

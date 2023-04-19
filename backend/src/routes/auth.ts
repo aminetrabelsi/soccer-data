@@ -40,7 +40,7 @@ const router = express.Router();
  *       type: object
  *       properties:
  *         token:
- *           type:string
+ *           type: string
  *           description: The authentication token
  *       example:
  *         token: xZt58jdil36mlp

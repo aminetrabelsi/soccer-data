@@ -1,3 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
+import { NotFoundError } from './utils/ApiError';
+import ErrorHandler from './utils/ErrorHandler';
+
 import connection from './utils/SequelizeClient';
 
 import config from './utils/Configuration';
@@ -7,6 +11,9 @@ import { Logger } from './utils/Logger';
 const logger = Logger.getInstance();
 
 import { app } from './app';
+
+app.use((req: Request, res: Response, next: NextFunction) => next(new NotFoundError(req.path)));
+app.use(ErrorHandler.handle());
 
 const startServer = async () => {
   try {

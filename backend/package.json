@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn src/server.ts",
     "prod": "cross-env NODE_ENV=production ts-node src/server.ts",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
     "build": "tsc -p .",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
