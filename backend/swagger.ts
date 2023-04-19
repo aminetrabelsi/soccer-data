@@ -1,54 +1,29 @@
-/* export const swaggerDocument = {
-  openapi: "3.0.1",
-  info: {
-    version: "1.0.0",
-    title: "Soccer API",
-    description: "Documentation for Soccer API",
-    termsOfService: "",
-    contact: {
-      name: "Amine Trabelsi",
-      email: "amin.trabelsi@gmail.com",
-      url: "",
-    },
-    license: {
-      name: "Apache 2.0",
-      url: "https://www.apache.org/licenses/LICENSE-2.0.html",
-    },
-  },
-  servers: [
-    {
-      url: "http://localhost/backend/api/v1",
-      description: "Local development",
-    },
-    {
-      url: "https://my_production_url/api/v1",
-      description: "Production",
-    },
-  ],
-  apis: ["./src/routes/*.ts"],
-}; */
-
 export const swaggerDocument = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "LogRocket Express API with Swagger",
-      version: "0.1.0",
+      title: "Soccer API",
+      version: "1.0.0",
       description:
-        "This is a simple CRUD API application made with Express and documented with Swagger",
+        "This is a Demo CRUD API application made with Express and documented with Swagger",
       license: {
         name: "MIT",
         url: "https://spdx.org/licenses/MIT.html",
       },
       contact: {
-        name: "LogRocket",
-        url: "https://logrocket.com",
-        email: "info@email.com",
+        name: "Amine Trabelsi",
+        email: "amin.trabelsi@gmail.com",
+        url: "",
       },
     },
     servers: [
       {
-        url: "http://localhost/backend",
+        url: "http://localhost/backend/api-docs/",
+        description: "Local development",
+      },
+      {
+        url: "http://http://soccerrestdemo-env.eba-xkmaupa2.eu-west-3.elasticbeanstalk.com/backend/api-docs/",
+        description: "Production",
       },
     ],
   },

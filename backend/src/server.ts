@@ -53,16 +53,20 @@ const forwardedPrefixSwagger = async (req: Request, res: Response, next: NextFun
   req.originalUrl = (req.headers['x-forwarded-prefix'] || '') + req.url;
   next();
 };
-
+let pref = '';
+if (process.env.NODE_ENV!=='development') {
+  pref = '/backend';
+}
 const specs = swaggerJsdoc(swaggerDocument);
-app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
+// app.use('/api-docs/', forwardedPrefixSwagger, swaggerUi.serve, swaggerUi.setup(specs));
+app.use('${pref}/api-docs/', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use('/leagues', leaguesRouter);
-app.use('/teams', teamsRouter);
-app.use('/players', playersRouter);
-app.use('/matches', matchesRouter);
-app.use('/stats', statsRouter);
-app.use('/auth', authRouter);
+app.use(`${pref}/leagues`, leaguesRouter);
+app.use(`${pref}/teams`, teamsRouter);
+app.use(`${pref}/players`, playersRouter);
+app.use(`${pref}/matches`, matchesRouter);
+app.use(`${pref}/stats`, statsRouter);
+app.use(`${pref}/auth`, authRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => next(new NotFoundError(req.path)));
 
