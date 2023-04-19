@@ -12,7 +12,6 @@ export default class ErrorHandler {
         success: false,
         message: err.message,
         rawErrors: err.rawErrors ?? [],
-        stack: err.stack,
       });
     };
   };

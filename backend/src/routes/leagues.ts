@@ -13,17 +13,13 @@ const router = express.Router();
  * @swagger
  * components:
  *   schemas:
- *     League:
+ *     LeagueRequest:
  *       type: object
  *       required:
- *         - id
  *         - name
  *         - country
  *         - season
  *       properties:
- *         id:
- *           type: number
- *           description: The auto-generated id of the league
  *         name:
  *           type: string
  *           description: The name of the league
@@ -32,12 +28,38 @@ const router = express.Router();
  *           description: The league country
  *         season:
  *           type: string
- *           description: The league season
+ *           description: The league season     
+ *     League:
+ *       allOf:
+ *         - $ref: '#/components/schemas/LeagueRequest'
+ *         - type: object
+ *           required:
+ *             - id
+ *           properties:
+ *             id:
+ *             type: number
+ *             description: The auto-generated id of the league
  *       example:
  *         id: 12345
  *         name: Serie A
  *         country: Italy
  *         season: 2022-2023
+ *     Error:
+ *       type: object
+ *       properties:
+ *         success:
+ *           type: string
+ *           description: false indicating an error
+ *         message:
+ *           type: string
+ *           description: General message
+ *         rawErrors:
+ *           type: array
+ *           description: Raw errors detected by the API 
+ *       example:
+ *         success: false
+ *         message: Request validation failed!
+ *         rawErrors: ["country should not be null or undefined"]
  */
 
 /**
@@ -100,7 +122,7 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/League'
+ *             $ref: '#/components/schemas/LeagueRequest'
  *     responses:
  *       200:
  *         description: The created league.
@@ -108,6 +130,14 @@ const router = express.Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/League'
+ *       400:
+ *         description: Missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *               type: string
+ *               example : Request validation failed!
  *       500:
  *         description: Some server error
  *   put:
