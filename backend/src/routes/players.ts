@@ -14,30 +14,12 @@ const router = express.Router();
  * @swagger
  * components:
  *   schemas:
- *     PlayerRequest:
+ *     UpdatePlayerRequest:
  *       type: object
- *       required:
- *         - firstname
- *         - lastname
- *         - numero
- *         - birthdate
- *         - country
- *         - position
- *         - teamId
  *       properties:
- *         firstname:
- *           type: string
- *           description: The first name of the player
- *         lastname:
- *           type: string
- *           description: The last name of the player
  *         numero:
  *           type: number
  *           description: The T-shirt num
- *         birthdate:
- *           type: string
- *           format: date
- *           description: The birth date of the player in ISO 8601
  *         country:
  *           type: string
  *           description: The player country
@@ -47,6 +29,39 @@ const router = express.Router();
  *         teamId:
  *           type: string
  *           description: The team ID
+ *       example:
+ *         numero: 10
+ *         country: Argentina
+ *         position: Midfield
+ *         teamId: 1
+ *     PlayerRequest:
+ *       allOf:
+ *         - $ref: '#/components/schemas/UpdatePlayerRequest'
+ *         - type: object
+ *           required:
+ *             - firstname
+ *             - lastname
+ *             - numero
+ *             - birthdate
+ *           properties:
+ *             firstname:
+ *               type: string
+ *               description: The first name of the player
+ *             lastname:
+ *               type: string
+ *               description: The last name of the player
+ *             birthdate:
+ *               type: string
+ *               format: date
+ *               description: The birth date of the player in ISO 8601
+ *       example:
+ *         firstname: Diego
+ *         lastname: Maradona
+ *         numero: 10
+ *         birthdate: 1960-10-30
+ *         country: Argentina
+ *         position: Midfield
+ *         teamId: 1
  *     Player:
  *       allOf:
  *         - $ref: '#/components/schemas/PlayerRequest'
@@ -86,6 +101,44 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Player'
+ *   post:
+ *     summary: Create a new player
+ *     tags: [Players]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PlayerRequest'
+ *     responses:
+ *       200:
+ *         description: The created player.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Player'
+ *       400:
+ *         description: Missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *               type: string
+ *               example : Request validation failed!
+ *       401:
+ *         description: Unauthorized access
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Please authenticate
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  * /players/{id}:
  *   get:
  *     summary: Get the player by id
@@ -94,7 +147,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The player id
  *     responses:
@@ -120,32 +173,137 @@ const router = express.Router();
  *               example : Player id should be a number
  *       500:
  *         description: Some server error
- *   post:
- *     summary: Create a new player
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
+ *   put:
+ *     summary: Update a player
  *     tags: [Players]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PlayerRequest'
+ *             $ref: '#/components/schemas/UpdatePlayerRequest'
  *     responses:
  *       200:
- *         description: The created player.
+ *         description: Confirmation message
  *         content:
- *           application/json:
+ *           text/plain:
  *             schema:
- *               $ref: '#/components/schemas/Player'
- *       400:
- *         description: Missing required fields
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  *               type: string
- *               example : Request validation failed!
+ *               example : Player id updated!
+ *       400:
+ *         description: Bad player ID
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Player id should be a number
+ *       401:
+ *         description: Unauthorized access
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Please authenticate
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
+ * /players/{id}/stats:
+ *   get:
+ *     summary: Get the statistics of the given player id
+ *     tags: [Players]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The player id
+ *     responses:
+ *       200:
+ *         description: The list of player statistics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Stat'
+ *       404:
+ *         description: The player was not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Player 1 not found !
+ *       400:
+ *         description: Bad player id
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Player id should be a number
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
+ * /players/{id}/match/{match}/stats:
+ *   get:
+ *     summary: Get the statistics of the given player id for the given match
+ *     tags: [Players]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The player id
+ *       - in: path
+ *         name: match
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The match id
+ *     responses:
+ *       200:
+ *         description: The list of player statistics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Stat'
+ *       404:
+ *         description: The player was not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Player 1 not found !
+ *       400:
+ *         description: Bad player or match id
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : id should be a number
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  */
 
 
@@ -203,7 +361,7 @@ router.get('/:id/stats', async (req: Request, res: Response) => {
     if (stats) {
       res.status(200).send(stats);
     } else {
-      res.status(404).send('Player not found !');
+      res.status(404).send(`Player ${id} not found !`);
     }
   } catch (err) {
     logger.error(err);

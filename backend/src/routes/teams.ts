@@ -30,7 +30,8 @@ const router = express.Router();
  *           type: string
  *           description: The venue/stadium of the team 
  *         founded:
- *           type: date
+ *           type: string
+ *           format: date
  *           description: The date on which the team was founded in ISO 8601
  *         city:
  *           type: string
@@ -38,6 +39,12 @@ const router = express.Router();
  *         country:
  *           type: string
  *           description: The team country
+ *       example:
+ *         name: S.S.C. Napoli
+ *         founded: 1926-08-25
+ *         venue: Stadio Diego Armando Maradona
+ *         city: Napoly
+ *         country: Italy
  *     Team:
  *       allOf:
  *         - $ref: '#/components/schemas/TeamRequest'
@@ -83,7 +90,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The team id
  *     responses:
@@ -109,6 +116,11 @@ const router = express.Router();
  *               example : Team id should be a number
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  *   post:
  *     summary: Create a new team
  *     tags: [Teams]
@@ -133,8 +145,20 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Error'
  *               type: string
  *               example : Request validation failed!
+ *       401:
+ *         description: Unauthorized access
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Please authenticate
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  * /teams/{id}/players:
  *   get:
  *     summary: Get the players of the given team id
@@ -143,7 +167,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The team id
  *     responses:
@@ -171,6 +195,11 @@ const router = express.Router();
  *               example : Team id should be a number
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  */
 
 router.get('/', async (req: Request, res: Response) => {

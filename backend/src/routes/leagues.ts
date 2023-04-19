@@ -88,7 +88,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The league id
  *     responses:
@@ -114,6 +114,11 @@ const router = express.Router();
  *               example : League id should be a number
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  *   post:
  *     summary: Create a new league
  *     tags: [Leagues]
@@ -138,8 +143,20 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Error'
  *               type: string
  *               example : Request validation failed!
+ *       401:
+ *         description: Unauthorized access
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Please authenticate
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  *   delete:
  *     summary: Remove the league by id
  *     tags: [Leagues]
@@ -147,7 +164,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The league id
  *
@@ -158,13 +175,6 @@ const router = express.Router();
  *           text/plain:
  *             type: string
  *             example : League 1 deleted successfully
- *       404:
- *         description: The league was not found
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example : League 1 not found !
  *       400:
  *         description: Bad league id
  *         content:
@@ -172,8 +182,27 @@ const router = express.Router();
  *             schema:
  *               type: string
  *               example : League id should be a number
+ *       401:
+ *         description: Unauthorized access
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Please authenticate
+ *       404:
+ *         description: The league was not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : League 1 not found !
  *       500:
  *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
  */
 
 router.get('/', async (req: Request, res: Response) => {

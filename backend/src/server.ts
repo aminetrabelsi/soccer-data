@@ -21,7 +21,6 @@ import { playersRouter } from './routes/players';
 import { matchesRouter } from './routes/matches';
 import { statsRouter } from './routes/stats';
 import { authRouter } from './routes/auth';
-import { stringify } from 'querystring';
 
 const app: Application = express();
 
@@ -50,17 +49,7 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 app.use('/healthcheck', require('express-healthcheck')());
 
 const specs = swaggerJsdoc(swaggerDocument);
-if (process.env.NODE_ENV==='development') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-} else {
-  // serve the swagger ui in a temporary directory
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-  // swagger-ui-express middleware that redirect user to /api-docs will not be aware the prefix of path by ngnix
-  const apiDocsRedirectPath = '/backend'.concat('/api-docs/');
-  app.get('/api-docs', function (req, res) {
-    res.redirect(apiDocsRedirectPath);
-  });
-}
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);

@@ -7,6 +7,87 @@ import { SignInRequest, SignUpRequest } from '../middlewares/validation/UserRequ
 const logger = Logger.getInstance();
 const router = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     AuthRequest:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: The username
+ *         password:
+ *           type: string
+ *           description: The password
+ *       example:
+ *         name: tifoso
+ *         password: ForzaRagazz1
+ *     User:
+ *       allOf:
+ *         - $ref: '#/components/schemas/AuthRequest'
+ *         - type: object
+ *           required:
+ *             - id
+ *           properties:
+ *             id:
+ *             type: number
+ *             description: The auto-generated id of the user
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: The Authentication managing endpoints
+ * /signup:
+ *   post:
+ *     summary: Sign up to have more privileges
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuthRequest'
+ *     responses:
+ *       200:
+ *         description: Confirmation message
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : User registered
+ * /signin:
+ *   post:
+ *     summary: Sign in to have more privileges
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuthRequest'
+ *     responses:
+ *       200:
+ *         description: Authentication token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: xTYH15Fghol89mlop
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Error name message occured
+ */
+
 router.post('/signup', RequestValidator.validate(SignUpRequest), async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
