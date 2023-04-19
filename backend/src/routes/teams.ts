@@ -55,6 +55,41 @@ const router = express.Router();
  *         venue: Stadio Diego Armando Maradona
  *         city: Napoly
  *         country: Italy
+ *     Player:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: The player id
+ *           example: 1
+ *         firstname:
+ *           type: string
+ *           description: The player first name
+ *           example: Diego
+ *         lastname:
+ *           type: string
+ *           description: The player last name
+ *           example: Maradona
+ *         birthdate:
+ *           type: date
+ *           description: Date of birth
+ *           example: 1960-10-30
+ *         country:
+ *           type: string
+ *           description: The player country
+ *           example: Argentina
+ *         position:
+ *           type: string
+ *           description: position in pitch
+ *           example: Midfield
+ *         numero:
+ *           type: number
+ *           description: The T-shirt number
+ *           example: 10
+ *         teamId:
+ *           type: number
+ *           description: The team id
+ *           example: 1
  *     Error:
  *       type: object
  *       properties:
@@ -149,6 +184,40 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Error'
  *               type: string
  *               example : Request validation failed!
+ *       500:
+ *         description: Some server error
+ * /teams/{id}/players:
+ *   get:
+ *     summary: Get the players of the given team id
+ *     tags: [Teams]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The team id
+ *     responses:
+ *       200:
+ *         description: The list of team players
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Player'
+ *       404:
+ *         description: The team was not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Team 1 not found !
+ *       400:
+ *         description: Bad team id
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : Team id should be a number
  *       500:
  *         description: Some server error
  */

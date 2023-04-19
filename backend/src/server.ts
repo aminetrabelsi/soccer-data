@@ -58,7 +58,7 @@ if (process.env.NODE_ENV==='development') {
   // swagger-ui-express middleware that redirect user to /api-docs will not be aware the prefix of path by ngnix
   const apiDocsRedirectPath = '/backend'.concat('/api-docs/');
   app.get('/api-docs', function (req, res) {
-    res.redirect(apiDocsRedirectPath);
+    res.render(apiDocsRedirectPath);
   });
 }
 
