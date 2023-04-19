@@ -140,33 +140,6 @@ const router = express.Router();
  *               example : Request validation failed!
  *       500:
  *         description: Some server error
- *   put:
- *    summary: Update the league by the id
- *    tags: [Leagues]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: The league id
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/League'
- *    responses:
- *      200:
- *        description: The league was updated
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/League'
- *      404:
- *        description: The league was not found
- *      500:
- *        description: Some error happened
  *   delete:
  *     summary: Remove the league by id
  *     tags: [Leagues]
@@ -181,8 +154,26 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: The league was deleted
+ *         content:
+ *           text/plain:
+ *             type: string
+ *             example : League 1 deleted successfully
  *       404:
  *         description: The league was not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : League 1 not found !
+ *       400:
+ *         description: Bad league id
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example : League id should be a number
+ *       500:
+ *         description: Some server error
  */
 
 router.get('/', async (req: Request, res: Response) => {

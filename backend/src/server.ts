@@ -54,9 +54,9 @@ if (process.env.NODE_ENV==='development') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 } else {
   // serve the swagger ui in a temporary directory
-  app.use('/temp-api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   // swagger-ui-express middleware that redirect user to /api-docs will not be aware the prefix of path by ngnix
-  const apiDocsRedirectPath = '/backend'.concat('/temp-api-docs/');
+  const apiDocsRedirectPath = '/backend'.concat('/api-docs/');
   app.get('/api-docs', function (req, res) {
     res.redirect(apiDocsRedirectPath);
   });
