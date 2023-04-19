@@ -229,10 +229,14 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 router.post('/', RequestValidator.validate(CreateLeagueRequest), auth, async (req: Request, res: Response) => {
-  const { name, country, season } = req.body;
-  const league = await createLeague({ name, country, season });
-  logger.info(JSON.stringify(league));
-  res.status(200).send(league);
+  try {
+    const { name, country, season } = req.body;
+    const league = await createLeague({ name, country, season });
+    logger.info(JSON.stringify(league));
+    res.status(200).send(league);    
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+  }
 });
 
 router.delete('/:id', auth, async (req: Request, res: Response) => {

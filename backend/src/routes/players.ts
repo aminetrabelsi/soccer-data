@@ -312,10 +312,14 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 router.post('/', RequestValidator.validate(CreatePlayerRequest), auth, async (req: Request, res: Response) => {
-  const { firstname, lastname, numero, birthdate, country, position, teamId } = req.body;
-  const player = await createPlayer({ firstname, lastname, numero, birthdate, country, position, teamId });
-  logger.info(JSON.stringify(player));
-  res.status(200).send(player);
+  try {
+    const { firstname, lastname, numero, birthdate, country, position, teamId } = req.body;
+    const player = await createPlayer({ firstname, lastname, numero, birthdate, country, position, teamId });
+    logger.info(JSON.stringify(player));
+    res.status(200).send(player);    
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {

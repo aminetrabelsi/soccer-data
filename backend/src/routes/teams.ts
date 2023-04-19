@@ -244,10 +244,14 @@ router.get('/:id/players', async (req: Request, res: Response) => {
 });
 
 router.post('/', RequestValidator.validate(CreateTeamRequest), auth, async (req: Request, res: Response) => {
-  const { name, venue, founded, city, country } = req.body;
-  const team = await createTeam({ name, venue, founded, city, country });
-  logger.info(JSON.stringify(team));
-  res.status(200).send(team);
+  try {
+    const { name, venue, founded, city, country } = req.body;
+    const team = await createTeam({ name, venue, founded, city, country });
+    logger.info(JSON.stringify(team));
+    res.status(200).send(team);    
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
+  }
 });
 
 export { router as teamsRouter };

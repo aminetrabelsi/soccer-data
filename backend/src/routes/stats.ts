@@ -192,10 +192,14 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 router.post('/', RequestValidator.validate(CreateStatRequest), auth, async (req: Request, res: Response) => {
-  const { goals, assists, saves, yellow, red, minutes, matchId, playerId } = req.body;
-  const stat = await createStat({ goals, assists, saves, yellow, red, minutes, matchId, playerId });
-  logger.info(JSON.stringify(stat));
-  res.status(200).send(stat);
+  try {
+    const { goals, assists, saves, yellow, red, minutes, matchId, playerId } = req.body;
+    const stat = await createStat({ goals, assists, saves, yellow, red, minutes, matchId, playerId });
+    logger.info(JSON.stringify(stat));
+    res.status(200).send(stat);    
+  } catch (err) {
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+  }
 });
 
 export { router as statsRouter };
