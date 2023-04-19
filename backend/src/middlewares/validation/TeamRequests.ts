@@ -6,7 +6,7 @@ export class CreateTeamRequest {
   @IsDefined()
   venue!: string;
   @IsDefined()
-  founded!: string;
+  founded!: Date;
   @IsDefined()
   city!: string;
   @IsDefined()

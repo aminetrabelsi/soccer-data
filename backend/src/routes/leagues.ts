@@ -93,7 +93,7 @@ const router = express.Router();
  *         description: The league id
  *     responses:
  *       200:
- *         description: The league response by id
+ *         description: The requested league
  *         content:
  *           application/json:
  *             schema:
