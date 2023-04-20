@@ -244,9 +244,9 @@ router.post('/', RequestValidator.validate(CreateMatchRequest), auth, async (req
     const { played, venue, score, outcome, leagueId, host, guest } = req.body;
     const match = await createMatch({ played, venue, score, outcome, leagueId, host, guest });
     logger.info(JSON.stringify(match));
-    res.status(200).send(match);    
+    res.status(200).send(match);
   } catch (err) {
-    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
 });
 

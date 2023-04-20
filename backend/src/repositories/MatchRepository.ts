@@ -17,6 +17,6 @@ export const findById = async (id: number): Promise<Match | null> => {
   return await Match.findByPk(id);
 };
 
-export const findAll = async (offset:number, limit: number): Promise<Match[]> => {
-  return await Match.findAll({offset, limit});
+export const findAll = async (offset: number, limit: number): Promise<Match[]> => {
+  return await Match.findAll({ offset, limit });
 };

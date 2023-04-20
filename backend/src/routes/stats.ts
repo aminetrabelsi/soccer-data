@@ -207,9 +207,9 @@ router.post('/', RequestValidator.validate(CreateStatRequest), auth, async (req:
     const { goals, assists, saves, yellow, red, minutes, matchId, playerId } = req.body;
     const stat = await createStat({ goals, assists, saves, yellow, red, minutes, matchId, playerId });
     logger.info(JSON.stringify(stat));
-    res.status(200).send(stat);    
+    res.status(200).send(stat);
   } catch (err) {
-    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
 });
 

@@ -212,7 +212,7 @@ router.get('/', async (req: Request, res: Response) => {
     const offset: number = parseInt(req.body.offset) || 0;
     const limit: number = parseInt(req.body.limit) || 10;
     const teams = await findAll(offset, limit);
-  res.status(200).send(teams);
+    res.status(200).send(teams);
   } catch (err) {
     res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
@@ -259,7 +259,7 @@ router.post('/', RequestValidator.validate(CreateTeamRequest), auth, async (req:
     const { name, venue, founded, city, country } = req.body;
     const team = await createTeam({ name, venue, founded, city, country });
     logger.info(JSON.stringify(team));
-    res.status(200).send(team);    
+    res.status(200).send(team);
   } catch (err) {
     res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }

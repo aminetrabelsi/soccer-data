@@ -6,7 +6,7 @@ describe('Root route', () => {
     it('should return Welcome message', async () => {
       const res = await request(app).get('/');
       expect(res.statusCode).toEqual(200);
-      expect(res.text).toEqual('{\"message\":\"Hello To Soccer API!\"}')
+      expect(res.text).toEqual('{"message":"Hello To Soccer API!"}');
     });
   });
 });

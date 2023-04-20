@@ -256,9 +256,9 @@ router.post('/', RequestValidator.validate(CreateLeagueRequest), auth, async (re
     const { name, country, season } = req.body;
     const league = await createLeague({ name, country, season });
     logger.info(JSON.stringify(league));
-    res.status(200).send(league);    
+    res.status(200).send(league);
   } catch (err) {
-    res.status(500).send(`Error ${err.name} ${err.message} occured`);    
+    res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
 });
 

@@ -25,7 +25,7 @@ app.use(Logger.getHttpLoggerInstance());
 app.use(helmet());
 app.use(cors());
 
-if (process.env.NODE_ENV !=='test') { 
+if (process.env.NODE_ENV !== 'test') {
   app.use(function (req: Request, res: Response, next: NextFunction) {
     if (toobusy()) {
       logger.error('Server too busy!');
@@ -35,7 +35,7 @@ if (process.env.NODE_ENV !=='test') {
     }
   });
 }
-  
+
 app.get('/', async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
     message: 'Hello To Soccer API!',
@@ -52,10 +52,3 @@ app.use('/players', playersRouter);
 app.use('/matches', matchesRouter);
 app.use('/stats', statsRouter);
 app.use('/auth', authRouter);
-
-
-
-
-
-
-
