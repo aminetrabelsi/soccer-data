@@ -314,7 +314,7 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const offset: number = parseInt(req.body.offset) || 0;
-    const limit: number = parseInt(req.body.limit) || 1;
+    const limit: number = parseInt(req.body.limit) || 10;
     const players = await findAll(offset, limit);
     res.status(200).send(players);
   } catch (err) {
@@ -327,7 +327,7 @@ router.post('/', RequestValidator.validate(CreatePlayerRequest), auth, async (re
     const { firstname, lastname, numero, birthdate, country, position, teamId } = req.body;
     const player = await createPlayer({ firstname, lastname, numero, birthdate, country, position, teamId });
     logger.info(JSON.stringify(player));
-    res.status(200).send(player);    
+    res.status(200).send(player);
   } catch (err) {
     res.status(500).send(`Error ${err.name} ${err.message} occured`);
   }
