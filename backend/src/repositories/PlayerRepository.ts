@@ -1,8 +1,8 @@
 import { Op } from 'sequelize';
 import { Player, PlayerAttributes } from '../models/Player';
 
-export const createPlayer = async ({ firstname, lastname, numero, birthdate }: PlayerAttributes): Promise<Player> => {
-  const player = Player.build({ firstname, lastname, numero, birthdate });
+export const createPlayer = async ({ firstname, lastname, numero, birthdate, country, position }: PlayerAttributes): Promise<Player> => {
+  const player = Player.build({ firstname, lastname, numero, birthdate, country, position });
   return await player.save();
 };
 
